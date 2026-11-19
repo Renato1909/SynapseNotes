@@ -1,0 +1,25 @@
+{
+  "name": "@synapsenotes/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local --port 8787",
+    "dev:remote": "wrangler dev --remote --port 8787",
+    "deploy": "wrangler deploy",
+    "check": "wrangler deploy --dry-run --outdir dist",
+    "db:migrate:local": "wrangler d1 migrations apply synapsenotes-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply synapsenotes-db --remote",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@synapsenotes/shared": "*",
+    "lib0": "^0.2.99",
+    "y-protocols": "^1.0.7",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261118.1",
+    "wrangler": "^4.165.0"
+  }
+}

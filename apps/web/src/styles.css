@@ -1,0 +1,668 @@
+/* SynapseNotes - tema escuro, tipografia limpa, sem framework CSS. */
+
+:root {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --bg-raised: #161a21;
+  --bg-hover: #1d232d;
+  --border: #2a3140;
+  --text: #e6e9ef;
+  --text-dim: #9aa3b2;
+  --accent: #6ea8fe;
+  --accent-strong: #3d8bfd;
+  --danger: #f87171;
+  --ok: #4ade80;
+  --radius: 8px;
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--accent);
+}
+
+/* ---------- Layout base ---------- */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-raised);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-header .brand {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.app-header .brand span {
+  color: var(--accent);
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.center-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-card h1 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+}
+
+.auth-card .hint {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+}
+
+/* ---------- Formularios ---------- */
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.field > span {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 5px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: var(--accent-strong);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: filter 0.15s;
+}
+
+.btn:hover {
+  filter: brightness(1.1);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+  color: var(--text);
+  background: var(--bg-hover);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 0.85rem;
+}
+
+.error-box {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.muted {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* ---------- Lista de notas ---------- */
+
+.notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.notes-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.note-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.note-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.note-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-card .meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.badge.editor {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.badge.owner {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 60px 20px;
+}
+
+/* ---------- Editor ---------- */
+
+.editor-layout {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 53px);
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-raised);
+  flex-wrap: wrap;
+}
+
+.editor-toolbar .title-input {
+  flex: 1;
+  min-width: 180px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.editor-toolbar .title-input:hover,
+.editor-toolbar .title-input:focus {
+  border-color: var(--border);
+  background: var(--bg);
+  outline: none;
+}
+
+.mode-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.mode-toggle button {
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mode-toggle button.active {
+  background: var(--accent-strong);
+  color: #fff;
+}
+
+.mode-toggle button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Barra de formatação do modo rico */
+.format-toolbar {
+  padding: 6px 16px;
+  gap: 4px;
+}
+
+.format-toolbar .btn {
+  padding: 4px 9px;
+  font-size: 0.8rem;
+  font-family: var(--font);
+}
+
+.format-toolbar .btn.active {
+  background: rgba(110, 168, 254, 0.18);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.presence {
+  display: flex;
+  align-items: center;
+}
+
+.presence .avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0f1115;
+  border: 2px solid var(--bg-raised);
+  margin-left: -6px;
+}
+
+.presence .avatar:first-child {
+  margin-left: 0;
+}
+
+.conn-status {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.conn-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.conn-status.connected::before {
+  background: var(--ok);
+}
+
+.conn-status.connecting::before {
+  background: #fbbf24;
+}
+
+.editor-body {
+  flex: 1;
+  overflow: auto;
+  background: var(--bg);
+}
+
+/* TipTap (texto rico) */
+.rich-editor {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px 120px;
+  min-height: 100%;
+}
+
+.rich-editor .tiptap {
+  outline: none;
+  min-height: 60vh;
+}
+
+.rich-editor .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--text-dim);
+  pointer-events: none;
+  height: 0;
+}
+
+.rich-editor .tiptap h1 {
+  font-size: 1.8rem;
+}
+.rich-editor .tiptap h2 {
+  font-size: 1.4rem;
+}
+.rich-editor .tiptap h3 {
+  font-size: 1.15rem;
+}
+
+.rich-editor .tiptap pre {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  overflow-x: auto;
+}
+
+.rich-editor .tiptap code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--bg-raised);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.rich-editor .tiptap blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 12px 0;
+  padding-left: 14px;
+  color: var(--text-dim);
+}
+
+.rich-editor .tiptap ul,
+.rich-editor .tiptap ol {
+  padding-left: 24px;
+}
+
+.rich-editor .tiptap hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 20px 0;
+}
+
+/* Cursores de colaboracao (CollaborationCaret) */
+.tiptap .collaboration-carets__caret {
+  position: relative;
+  margin-left: -1px;
+  margin-right: -1px;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  word-break: normal;
+}
+
+.tiptap .collaboration-carets__label {
+  border-radius: 3px 3px 3px 0;
+  position: absolute;
+  top: -1.35em;
+  left: -1px;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 1px 4px;
+  user-select: none;
+  color: #fff;
+}
+
+/* Markdown (CodeMirror) */
+.markdown-editor {
+  height: 100%;
+}
+
+.markdown-editor .cm-editor {
+  height: 100%;
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  background: var(--bg);
+}
+
+.markdown-editor .cm-editor.cm-focused {
+  outline: none;
+}
+
+.markdown-editor .cm-content {
+  padding: 32px 24px 120px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.markdown-editor .cm-gutters {
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+}
+
+.markdown-editor .cm-cursor {
+  border-left-color: var(--accent);
+}
+
+/* Selecoes remotas no CodeMirror */
+.cm-remote-selection {
+  background: rgba(110, 168, 254, 0.22);
+}
+
+.cm-remote-label {
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  padding: 1px 4px;
+  border-radius: 3px 3px 3px 0;
+  position: relative;
+  top: -1.2em;
+}
+
+/* ---------- Dialogo de compartilhamento ---------- */
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+
+.dialog {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 460px;
+  padding: 24px;
+}
+
+.dialog h2 {
+  margin: 0 0 16px;
+  font-size: 1.15rem;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.member-row:last-child {
+  border-bottom: none;
+}
+
+.member-row .member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-row .member-info .name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.member-row .member-info .email {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.member-row select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  font-size: 0.85rem;
+}
+
+.share-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.share-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.share-form input:focus {
+  border-color: var(--accent);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+/* ---------- Utilitarios ---------- */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.loading-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--text-dim);
+}
